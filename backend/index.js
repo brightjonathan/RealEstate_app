@@ -18,3 +18,19 @@ app.listen(port, ()=>{
 //for all routes end-points
 app.use('/api/auth', authrouter);
 
+//middleware for handling errors 
+app.use((err, req, res, next)=>{
+  const statuscode  = err.statuscode || 500;
+  const message = err.message || 'internal Server error';
+  return res.status(statuscode).json({
+    success: false,
+    statuscode,
+    message,
+  });
+});
+
+
+
+
+
+
