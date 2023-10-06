@@ -16,4 +16,5 @@ app.listen(port, ()=>{
 });
 
 //for all routes end-points
- app.use('/api/auth', authrouter);
+app.use('/api/auth', authrouter);
+

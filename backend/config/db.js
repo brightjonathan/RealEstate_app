@@ -12,6 +12,6 @@ const db = asyncHandler( async () => {
   });
   
 
-export default db
+export default db;
 
 
