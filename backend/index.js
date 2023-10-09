@@ -2,9 +2,12 @@ import express from "express";
 const app = express();
 import db from './config/db.js';
 import authrouter from "./routes/auth.route.js";
+import authroutertwo from "./routes/user.route.js";
+import cookieParser from "cookie-parser";
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use(cookieParser());
 
 //connection to database
 db();
@@ -17,6 +20,7 @@ app.listen(port, ()=>{
 
 //for all routes end-points
 app.use('/api/auth', authrouter);
+app.use('/api/user', authroutertwo);
 
 //middleware for handling errors 
 app.use((err, req, res, next)=>{
