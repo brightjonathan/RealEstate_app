@@ -1,6 +1,6 @@
-import React from 'react'
-import {FaSearch} from 'react-icons/Fa'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import {FaSearch} from 'react-icons/Fa';
+import { Link } from 'react-router-dom';
 import {useSelector} from 'react-redux';
 
 
@@ -18,7 +18,7 @@ const Header = () => {
             <span className='text-slate-700'>Estate</span> 
           </h1>
         </Link>
-        <form className='bg-slate-100 p-3 rounded-lg flex items-center'>
+        <form className='bg-slate-100 p-3 rounded-lg flex items-center'> 
           <input
             type='text'
             placeholder='Search...'
