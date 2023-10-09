@@ -9,7 +9,7 @@ import bcrypt from 'bcryptjs';
 
 export const updateUser = asyncHandler(async (req, res, next) => {
     try {
-        // Check if the user is allowed to update their account
+        // Check if the user(from verify.user.js) is allowed to update their account
         if (req.user.id !== req.params.id) {
             return next(errorHandler(403, 'You can only update your own account!'));
         }
