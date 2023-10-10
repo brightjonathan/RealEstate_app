@@ -3,6 +3,7 @@ import User from '../Models/users.model.js';
 import { errorHandler } from '../utils/errors.js';
 import bcrypt from 'bcryptjs';
 
+
 //@desc      updating the user funct...
 //@route    POST /api/user/update/:id
 //@access    public
