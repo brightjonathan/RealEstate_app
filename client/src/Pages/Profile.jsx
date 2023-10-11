@@ -7,12 +7,12 @@ import { updateUserStart, updateUserFailure, updateUserSuccess, signInFailure } 
 const Profile = () => {
 
   const {currentUser, loading, error} = useSelector(state => state.user); //getting the authenticated user
-  
+
   
   const fileRef = useRef(null); //for the image
   const dispatch = useDispatch();
   
-  const [file, setFile] = useState(undefined);
+  //const [file, setFile] = useState(undefined);
   const [formData, setFormData] = useState({})
   const [updateSuccess, setUpdateSuccess] = useState(false);
   
@@ -51,7 +51,7 @@ const Profile = () => {
           const resizedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
   
           setFormData({ ...formData, avatar: resizedDataUrl });
-          console.log({ ...formData, avatar: resizedDataUrl });
+          //console.log({ ...formData, avatar: resizedDataUrl });
         };
       };
       reader.readAsDataURL(selectedFile);
@@ -129,8 +129,8 @@ const Profile = () => {
           className='border p-3 rounded-lg'
           onChange={handleChange}
         />
-        <button disabled={loading} className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>
-           {loading ? 'Loading...': 'update'} 
+        <button  className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>
+           {!loading ? 'update': 'loading...'}
         </button>
         
       </form>
