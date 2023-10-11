@@ -1,8 +1,18 @@
 import {useRef, useState} from 'react'
 import { Link } from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux';
-import { updateUserStart, updateUserFailure, updateUserSuccess, signInFailure } from '../Redux/user/UserSlice';
-
+import { 
+  updateUserStart,
+  updateUserFailure, 
+  updateUserSuccess, 
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserFailure,
+  signoutUserStart,
+  signoutUserSuccess,
+  signoutUserFailure
+ } from '../Redux/user/UserSlice';
+ import Notiflix from "notiflix";
 
 const Profile = () => {
 
@@ -17,12 +27,14 @@ const Profile = () => {
   const [updateSuccess, setUpdateSuccess] = useState(false);
   
 
+  //handles the input change
   const handleChange =(e)=>{
     setFormData({...formData, [e.target.id] : e.target.value })
   };
 
 
   //This logic is very important
+  //handles the file change upload
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
   
@@ -59,6 +71,7 @@ const Profile = () => {
   };
   
 
+  //handles the submit func...
   const handleSubmit = async (e)=>{
    e.preventDefault()
    try {
@@ -79,10 +92,94 @@ const Profile = () => {
     dispatch(updateUserSuccess(data));
     setUpdateSuccess(true);
    } catch (error) {
-     dispatch(updateUserFailure(error.message))
+     dispatch(updateUserFailure(error.message));
    }
 
-  }
+  };
+
+  //delete func...
+  const handleDelete = async () => {
+    try {
+      dispatch(deleteUserStart());
+
+      const res =  await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message))
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+      //setUpdateSuccess(true);
+
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+  };
+
+
+  
+  const confirmDelete = () => {
+    Notiflix.Confirm.show(
+      "Delete Account!!!",
+      "You are about to delete this account",
+      "Delete",
+      "Cancel",
+      function okCb() {
+        handleDelete();
+      },
+      function cancelCb() {
+        console.log("Delete Canceled");
+      },
+      {
+        width: "320px",
+        borderRadius: "3px",
+        titleColor: "orangered",
+        okButtonBackground: "orangered",
+        cssAnimationStyle: "zoom",
+      }
+    );
+  };
+
+  //logout func...
+  const logout = async() => {
+   try {
+    dispatch(signoutUserStart());
+    const res = await fetch('/api/auth/signout');
+    const data = await res.json();
+    if (data.success === false) {
+      dispatch(signoutUserFailure(data.message));
+      return;
+    }
+      dispatch(signoutUserSuccess(data))
+   } catch (error) {
+    dispatch(signoutUserFailure(data));
+   }
+  };
+
+  //
+  const confirmLoggedout = () => {
+    Notiflix.Confirm.show(
+      "Logout Account!!!",
+      "You are about to logout this account",
+      "Logout",
+      "Cancel",
+      function okCb() {
+        logout();
+      },
+      function cancelCb() {
+        console.log("Logout Canceled");
+      },
+      {
+        width: "320px",
+        borderRadius: "3px",
+        titleColor: "orangered",
+        okButtonBackground: "orangered",
+        cssAnimationStyle: "zoom",
+      }
+    );
+  };
 
 
 
@@ -136,8 +233,8 @@ const Profile = () => {
       </form>
 
       <div className='flex justify-between mt-5'>
-        <span className='text-red-700 cursor-pointer'> Delete account </span>
-        <span className='text-red-700 cursor-pointer'> Sign out </span>
+        <span onClick={confirmDelete} className='text-red-700 cursor-pointer'> Delete account </span>
+        <span onClick={confirmLoggedout} className='text-red-700 cursor-pointer'> Sign out </span>
       </div>
 
       <p className='text-red-700 mt-5'>{error ? error : ''}</p>

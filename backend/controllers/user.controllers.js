@@ -41,3 +41,20 @@ export const updateUser = asyncHandler(async (req, res, next) => {
         next(error);
     }
 });
+
+
+//@desc      deleting the user funct...
+//@route     DELETE /api/user/delete/:id
+//@access    public
+export const deleteUser = asyncHandler( async (req, res, next)=>{
+
+    // Check if the user(from verify.user.js) is allowed to update their account
+    if (req.user.id !== req.params.id) return next(errorHandler(401, 'You can only delete your own account!'));
+  try {
+    await User.findByIdAndDelete(req.params.id)
+    res.clearCookie('access_token');
+    res.status(200).json('user has been deleted');
+  } catch (error) {
+    next(error)
+  }  
+});

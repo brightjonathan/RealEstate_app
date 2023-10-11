@@ -47,4 +47,14 @@ export const signin = asyncHandler(async (req, res, next)=>{
 });
 
 
-
+//@desc      logout funct...
+//@route    GET /api/auth/signout
+//@access    public
+export const signout = asyncHandler(async(req, res, next)=>{
+   try {
+      res.clearCookie('access_token');
+      res.status(200).json('user has been logged out')
+   } catch (error) {
+      next(error);
+   }
+});
