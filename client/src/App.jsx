@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import {Home, About, Login, Profile, Register,} from '../src/Pages/PagesExport'
 import Header from "./Components/Header";
 import PrivateRoutes from './Components/PrivateRoutes';
+import CreateListing from './Pages/CreateListing';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/sign-up" element={<Register/>} />
         <Route element={ <PrivateRoutes /> } >
         <Route path="/profile" element={<Profile/>} />
+        <Route path='/create-listing' element={<CreateListing/>} />
         </Route>
         <Route path="/about-us" element={<About/>} />
       </Routes> 
