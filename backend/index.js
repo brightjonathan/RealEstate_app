@@ -3,6 +3,7 @@ const app = express();
 import db from './config/db.js';
 import authrouter from "./routes/auth.route.js";
 import authroutertwo from "./routes/user.route.js";
+import listingrouter from "./routes/listing.route.js";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 
@@ -26,6 +27,7 @@ app.listen(port, ()=>{
 //for all routes end-points
 app.use('/api/auth', authrouter);
 app.use('/api/user', authroutertwo);
+app.use('/api/listing', listingrouter);
 
 //middleware for handling errors 
 app.use((err, req, res, next)=>{
