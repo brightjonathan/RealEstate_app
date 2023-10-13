@@ -1,5 +1,5 @@
 import React from 'react';
-import {FaSearch} from 'react-icons/Fa';
+import {BsSearch} from 'react-icons/bs'
 import { Link } from 'react-router-dom';
 import {useSelector} from 'react-redux';
 
@@ -25,7 +25,7 @@ const Header = () => {
             className='bg-transparent focus:outline-none w-24 sm:w-64'
           />
           <button>
-            <FaSearch className='text-slate-600' />
+            <BsSearch className='text-slate-600' />
           </button>
         </form>
         <ul className='flex gap-4'>
