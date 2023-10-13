@@ -10,13 +10,14 @@ const OAuth = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    // 
     const handleGoogleClick = async () => {
         try {
           const provider = new GoogleAuthProvider();
           const auth = getAuth(app);
-    
+      
           const result = await signInWithPopup(auth, provider);
-    
+      
           const res = await fetch('/api/auth/google', {
             method: 'POST',
             headers: {
@@ -28,13 +29,21 @@ const OAuth = () => {
               photo: result.user.photoURL,
             }),
           });
-          const data = await res.json();
-          dispatch(signInSuccess(data));
-          navigate('/');
+      
+          if (res.ok) {
+            const data = await res.json();
+            dispatch(signInSuccess(data));
+            navigate('/');
+          } else {
+            console.error('Error during Google Sign-In:', res.status, res.statusText);
+            // Handle the error as needed (e.g., show an error message to the user).
+          }
         } catch (error) {
-          console.log('could not sign in with google', error);
+          console.error('An error occurred during Google Sign-In:', error);
+          // Handle the error as needed (e.g., show an error message to the user).
         }
       };
+      
     
   return (
     <button
@@ -48,3 +57,32 @@ const OAuth = () => {
 }
 
 export default OAuth;
+
+
+
+
+//const handleGoogleClick = async () => {
+    //     try {
+    //       const provider = new GoogleAuthProvider();
+    //       const auth = getAuth(app);
+    
+    //       const result = await signInWithPopup(auth, provider);
+    
+    //       const res = await fetch('/api/auth/google', {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //           name: result.user.displayName,
+    //           email: result.user.email,
+    //           photo: result.user.photoURL,
+    //         }),
+    //       });
+    //       const data = await res.json();
+    //       dispatch(signInSuccess(data));
+    //       navigate('/');
+    //     } catch (error) {
+    //       //console.log('could not sign in with google', error);
+    //     }
+    //   };
