@@ -5,11 +5,13 @@ import authrouter from "./routes/auth.route.js";
 import authroutertwo from "./routes/user.route.js";
 import listingrouter from "./routes/listing.route.js";
 import cookieParser from "cookie-parser";
+import cors from 'cors';
 import bodyParser from "body-parser";
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(cors())
 
 // Add body-parser middleware with a higher limit (e.g., 10MB)
 app.use(bodyParser.json({ limit: '20mb' }));

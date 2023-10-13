@@ -1,3 +1,32 @@
+import { initializeApp } from "firebase/app";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyANHH6z1CFSjqD51HH4JlxFqztUCEDumic",
+  authDomain: "realestate-app-90f61.firebaseapp.com",
+  projectId: "realestate-app-90f61",
+  storageBucket: "realestate-app-90f61.appspot.com",
+  messagingSenderId: "522603943449",
+  appId: "1:522603943449:web:ad771ede4dea7e6417bc88"
+};
+
+// Initialize Firebase
+export const app = initializeApp(firebaseConfig);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import { initializeApp } from "firebase/app";
 // import { GoogleAuthProvider, getAuth } from "firebase/auth";
 
@@ -16,5 +45,4 @@
 // Initialize Firebase
 // export const app = initializeApp(firebaseConfig);
 // export const auth = getAuth(app);
-// export const provider = new GoogleAuthProvider(); //signing in with google
-// export default app;
+
