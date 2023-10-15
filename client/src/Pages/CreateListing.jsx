@@ -97,7 +97,7 @@ const CreateListing = () => {
                 setUploading(false);
               })
               .catch((err) => {
-                setImageUploadError('Image upload failed (4 mb max per image)');
+                setImageUploadError('Image upload failed (2mb max per image)');
                 setUploading(false);
               });
           } else {
@@ -145,12 +145,16 @@ const CreateListing = () => {
       e.preventDefault();
       //console.log(formData);
       try {
-        // if (formData.imageUrls.length < 1)
-        //   return setError('You must upload at least one image');
-        // if (+formData.regularPrice < +formData.discountPrice)
-        //   return setError('Discount price must be lower than regular price');
-        // setLoading(true);
-        // setError(false);
+
+
+        if (imageUrls.length < 1) 
+          return setError('You must upload at least one image');
+
+        if (+formData.discountPrice > +formData.regularPrice)
+          return setError('Discount price must be lower than regular price');
+
+        setLoading(true);
+        setError(false);
         const res = await fetch('/api/listing/create', {
           method: 'POST',
           headers: {
@@ -168,7 +172,7 @@ const CreateListing = () => {
           setError(data.message);
           console.log(data.message);
         }
-       // navigate(`/listing/${data._id}`);
+       navigate(`/listing/${data._id}`);
       } catch (error) {
         setError(error.message);
         console.log(error.message);
@@ -307,8 +311,8 @@ const CreateListing = () => {
             <p>Regular price</p>
             <span className='text-xs'>(#/month)</span>
             </div>
-
           </div>
+          {offer && (
           <div className='flex items-center gap-2'>
             <input
               type='number'
@@ -322,9 +326,12 @@ const CreateListing = () => {
             />
             <div className='flex flex-col items-center'>
             <p>Discount price</p>
+            {type === 'rent' && (
             <span className='text-xs'>(#/month)</span>
+            )}
             </div>
           </div>
+          )}
         </div>
       </div>
       <div className='flex flex-col flex-1 gap-4'>
@@ -349,6 +356,9 @@ const CreateListing = () => {
             {uploading ? 'Uploading...' : 'Upload'}
           </button>
         </div>
+        <p className='text-red-700 text-sm'>
+            {imageUploadError && imageUploadError}
+          </p>
         {imageUrls.length > 0 &&
             imageUrls.map((url, index) => (
               <div
