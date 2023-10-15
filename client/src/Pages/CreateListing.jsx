@@ -130,6 +130,14 @@ const CreateListing = () => {
           );
         });
       };
+
+
+      const handleRemoveImage = (index) => {
+        setFormData({
+          ...formData,
+          imageUrls: formData.imageUrls.filter((_, i) => i !== index),
+        });
+      };
     
 
     //handles the form submit to the database 
@@ -345,7 +353,7 @@ const CreateListing = () => {
             imageUrls.map((url, index) => (
               <div
                 key={url}
-                className='flex justify-between p-3 border items-center'
+                className='flex justify-between p-3 border items-center' 
               >
                 <img
                   src={url}
@@ -354,8 +362,8 @@ const CreateListing = () => {
                 />
                 <button
                   type='button'
-                //   onClick={() => handleRemoveImage(index)}
-                  className='p-3 text-red-700 rounded-lg uppercase hover:opacity-75'
+                  onClick={() => handleRemoveImage(index)}
+                  className='p-3 text-red-700 rounded-lg uppercase hover:opacity-75' 
                 >
                   Delete
                 </button>
@@ -373,6 +381,8 @@ const CreateListing = () => {
 }
 
 export default CreateListing;
+
+
 
 
 // const handleFileChange = async (e) => {

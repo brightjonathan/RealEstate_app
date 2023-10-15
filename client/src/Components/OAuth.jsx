@@ -10,7 +10,7 @@ const OAuth = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // 
+    //handles google auth ... 
     const handleGoogleClick = async () => {
         try {
           const provider = new GoogleAuthProvider();
