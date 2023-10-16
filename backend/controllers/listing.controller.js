@@ -32,8 +32,6 @@ export const deleteUserListings = asyncHandler(async (req, res, next)=>{
    if (req.user.id !== listing.userRef) {
     return next(errorHandler(403, 'You can only delete a list on your own account!')); 
    };
-
-
    try {
       await Listing.findByIdAndDelete(req.params.id);
       res.status(200).json('Listing has been deleted successfully')
@@ -41,3 +39,38 @@ export const deleteUserListings = asyncHandler(async (req, res, next)=>{
      next(error)
    };
 });
+
+
+
+//@desc      updating the user listings funct...
+//@route     DELETE /api/listing/updateUser/:id  
+//@access    public
+export const updateUserListings = asyncHandler(async(req, res, next)=>{
+   const listing = await Listing.findById(req.params.id);
+
+   if (!listing) {
+    return next(errorHandler(403, 'Listing not found'));
+   };
+
+   // Check if the user(from verify.user.js) is allowed to update their account
+   if (req.user.id !== listing.userRef) {
+      return next(errorHandler(403, 'You can only update a list on your own account!')); 
+   };
+
+   try {
+      const updatedListing = await Listing.findByIdAndUpdate(
+         req.params.id,
+         req.body,
+         {new: true}     //getting the new updated listing. if you don't add this you will still get the previous one.   
+      );
+      res.status(200).json(updatedListing);
+   } catch (error) {
+      next(error)
+   }
+
+
+});
+
+
+
+
