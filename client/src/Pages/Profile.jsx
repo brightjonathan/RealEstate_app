@@ -238,6 +238,51 @@ const {currentUser, loading, error} = useSelector(state => state.user); //gettin
     }
   };
 
+
+  const handleListingDelete = async (listingId) => {
+    try {
+      const res = await fetch(`/api/listing/deleteUser/${listingId}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+
+      setUserListings((prev) =>
+        prev.filter((listing) => listing._id !== listingId)
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+
+  
+  const comfirmhandleListingDelete = (listingId) => {
+    Notiflix.Confirm.show(
+      "Delete List!!!",
+      "You are about to delete this list",
+      "Yes",
+      "Cancel",
+      function okCb() {
+        handleListingDelete(listingId)
+      },
+      function cancelCb() {
+        console.log("Delete Canceled");
+      },
+      {
+        width: "320px",
+        borderRadius: "3px",
+        titleColor: "orangered",
+        okButtonBackground: "orangered",
+        cssAnimationStyle: "zoom",
+      }
+    );
+  };
+
+
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -320,7 +365,7 @@ const {currentUser, loading, error} = useSelector(state => state.user); //gettin
               </Link>
 
               <div className='flex flex-col item-center'>
-                <button className='text-red-700 uppercase'> Delete </button>
+                <button className='text-red-700 uppercase' onClick={() => comfirmhandleListingDelete(listing._id)} > Delete </button>
                 <Link to={`#`}>
                   <button className='text-green-700 uppercase'>Edit</button>
                 </Link>

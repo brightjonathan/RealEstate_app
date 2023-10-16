@@ -69,7 +69,7 @@ export const getUsersListings = asyncHandler(async (req, res, next) => {
     // Validate if the user ID is equal to the parameter ID
     if (req.user.id === req.params.id) {
       try {
-        const listings = await Listing.find({ userRef: req.params.id });
+        const listings = await Listing.find({ userRef: req.params.id });  ////finding the user who posted it using there id
         res.status(200).json(listings); // Send the retrieved listings in the response
       } catch (error) {
         // Handle database query errors
@@ -79,23 +79,4 @@ export const getUsersListings = asyncHandler(async (req, res, next) => {
         return next(errorHandler(401, 'you can only view your own listing'));
     }
   });
-  
-
-  
-// export const getUserslistings = asyncHandler(async (req, res, next)=>{
-
-
-//     //validating if the user id is equal to the params 
-//    if(req.user.id === req.params.id){
-//        try {
-//          const listings = await Listing.find({useRef: req.params.id}) //finding the user who posted it using there id  
-//          res.status(200).json(listings)
-//        } catch (error) {
-//         next(error);
-//        }
-//    }else{
-//      return next(errorHandler(401, 'you can only view your own listing'))
-//    }
-
-// });
 

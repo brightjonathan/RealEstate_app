@@ -10,5 +10,6 @@ authroutertwo.delete("/delete/:id", VerifyUserToken, deleteUser);
 authroutertwo.get("/listings/:id", VerifyUserToken, getUsersListings);
 
 
+
 export default authroutertwo;
 
