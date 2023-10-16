@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'; //using asyncHandler dependency... to handle all error in a func...
-import User from '../Models/users.model.js';
+import User from '../Models/users.model.js';  //user model
+import Listing from '../Models/listing.model.js';  //listing model
 import { errorHandler } from '../utils/errors.js';
 import bcrypt from 'bcryptjs';
 
@@ -58,3 +59,43 @@ export const deleteUser = asyncHandler( async (req, res, next)=>{
     next(error)
   }  
 });
+
+
+
+//@desc      getting the user listings funct...
+//@route     GET /api/user/listings/:id
+//@access    public
+export const getUsersListings = asyncHandler(async (req, res, next) => {
+    // Validate if the user ID is equal to the parameter ID
+    if (req.user.id === req.params.id) {
+      try {
+        const listings = await Listing.find({ userRef: req.params.id });
+        res.status(200).json(listings); // Send the retrieved listings in the response
+      } catch (error) {
+        // Handle database query errors
+        next(error);
+      }
+    } else {
+        return next(errorHandler(401, 'you can only view your own listing'));
+    }
+  });
+  
+
+  
+// export const getUserslistings = asyncHandler(async (req, res, next)=>{
+
+
+//     //validating if the user id is equal to the params 
+//    if(req.user.id === req.params.id){
+//        try {
+//          const listings = await Listing.find({useRef: req.params.id}) //finding the user who posted it using there id  
+//          res.status(200).json(listings)
+//        } catch (error) {
+//         next(error);
+//        }
+//    }else{
+//      return next(errorHandler(401, 'you can only view your own listing'))
+//    }
+
+// });
+
