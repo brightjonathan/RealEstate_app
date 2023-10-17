@@ -43,7 +43,7 @@ export const deleteUserListings = asyncHandler(async (req, res, next)=>{
 
 
 //@desc      updating the user listings funct...
-//@route     DELETE /api/listing/updateUser/:id  
+//@route     post /api/listing/updateUser/:id  
 //@access    public
 export const updateUserListings = asyncHandler(async(req, res, next)=>{
    const listing = await Listing.findById(req.params.id);
@@ -72,5 +72,18 @@ export const updateUserListings = asyncHandler(async(req, res, next)=>{
 });
 
 
+
+//@desc      GETTING the user listings funct...
+//@route     GET /api/listing/getUserlisting/:id  
+//@access    public
+export const getUserListings = asyncHandler(async (req, res, next)=>{
+      try {
+         const listing = await Listing.findById(req.params.id);
+         if (!listing) return next(errorHandler(401, 'listing not found'));
+         res.status(200).json(listing);
+      } catch (error) {
+         next(error)
+      }
+});
 
 

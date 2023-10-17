@@ -366,7 +366,7 @@ const {currentUser, loading, error} = useSelector(state => state.user); //gettin
 
               <div className='flex flex-col item-center'>
                 <button className='text-red-700 uppercase' onClick={() => comfirmhandleListingDelete(listing._id)} > Delete </button>
-                <Link to={`#`}>
+                <Link to={`/update-listing/${listing._id}`}>
                   <button className='text-green-700 uppercase'>Edit</button>
                 </Link>
               </div>

@@ -1,16 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {useSelector} from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { app } from '../Firebase/Firebase';
 import { getDownloadURL, getStorage, ref,uploadBytesResumable } from 'firebase/storage';
 
 
-
-// firebase storage
-  // allow read;
-  // allow write: if
-  // request.resource.size < 2 * 1024 * 1024 &&
-  // request.resource.contentType.matches('image/.*')
 
 const initialState = {
     title: '',
@@ -27,8 +21,9 @@ const initialState = {
     imageUrls: [],
 };
 
-const CreateListing = () => {
+const UpdateUser = () => {
 
+    const {id} = useParams()
     const navigate = useNavigate();
 
     const {currentUser} = useSelector(state => state.user);
@@ -74,6 +69,22 @@ const CreateListing = () => {
     }
 
     };
+
+    useEffect(()=>{
+
+    const fetchingList =  async ()=>{
+     const userId = id;
+     const res = await fetch(`/api/listing/getUserlisting/${userId}`);
+     const data = await res.json();
+     if (data.success === false) {
+        console.log(data.message);
+        return;
+     }
+     setFormData(data);
+    };
+
+    fetchingList();
+    }, []);
 
 
     
@@ -155,7 +166,7 @@ const CreateListing = () => {
 
         setLoading(true);
         setError(false);
-        const res = await fetch('/api/listing/create', {
+        const res = await fetch(`/api/listing/updateUser/${id}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -184,7 +195,7 @@ const CreateListing = () => {
   return (
     <main className='p-3 max-w-4xl mx-auto'>
     <h1 className='text-3xl font-semibold text-center my-7'>
-      Create a Listing
+      Update your Listing
     </h1>
     <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>
       <div className='flex flex-col gap-4 flex-1'>
@@ -380,7 +391,7 @@ const CreateListing = () => {
               </div>
             ))}
         <button type='submit' className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
-        {loading ? 'Creating...' : 'Create listing'}
+        {loading ? 'Creating...' : 'Update listing'}
         </button>
         {error && <p className='text-red-700 text-sm'>{error}</p>}
         
@@ -390,8 +401,6 @@ const CreateListing = () => {
   )
 }
 
-export default CreateListing;
-
-
+export default UpdateUser;
 
 
