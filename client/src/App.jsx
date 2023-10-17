@@ -5,6 +5,7 @@ import Header from "./Components/Header";
 import PrivateRoutes from './Components/PrivateRoutes';
 import CreateListing from './Pages/CreateListing';
 import UpdateUser from './Pages/UpdateUser';
+import Listing from './Pages/Listing';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path='/create-listing' element={<CreateListing/>} />
         <Route path='/update-listing/:id' element={<UpdateUser/>}/>
         </Route>
+        <Route path='/listing/:id' element={<Listing/>}/>
         <Route path="/about-us" element={<About/>} />
       </Routes> 
     </>
