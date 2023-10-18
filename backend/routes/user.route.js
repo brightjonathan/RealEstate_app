@@ -1,6 +1,6 @@
 import express from 'express';
 const authroutertwo = express.Router();
-import { updateUser, deleteUser, getUsersListings } from '../controllers/user.controllers.js';
+import { updateUser, deleteUser, getUsersListings, getUsers} from '../controllers/user.controllers.js';
 import { VerifyUserToken } from '../utils/Verify.user.js';
 
 
@@ -8,6 +8,7 @@ import { VerifyUserToken } from '../utils/Verify.user.js';
 authroutertwo.post("/update/:id", VerifyUserToken, updateUser);
 authroutertwo.delete("/delete/:id", VerifyUserToken, deleteUser);
 authroutertwo.get("/listings/:id", VerifyUserToken, getUsersListings);
+authroutertwo.get("/:id", VerifyUserToken, getUsers);
 
 
 

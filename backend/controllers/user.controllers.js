@@ -80,3 +80,25 @@ export const getUsersListings = asyncHandler(async (req, res, next) => {
     }
   });
 
+
+
+ //@desc      getting the user funct...
+ //@route     GET /api/user/:id
+ //@access    public
+  export const getUsers = asyncHandler(async (req, res, next)=>{
+
+    try {
+      const user = await User.findById(req.params.id);
+
+      if (!user) {
+        return next(404, errorHandler('User not found!'));
+      }
+
+      const { password, ...rest } = user._doc;
+      res.status(200).json(rest);
+      } catch (error) {
+        next(error)
+      }
+      
+  });
+
