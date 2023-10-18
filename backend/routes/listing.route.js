@@ -2,7 +2,7 @@ import express from 'express';
 const listingrouter = express.Router();
 import {
     createListing, 
-    deleteUserListings, 
+    deleteUserListings,
     updateUserListings, 
     getUserListings, 
     searchListings
