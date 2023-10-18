@@ -87,3 +87,73 @@ export const getUserListings = asyncHandler(async (req, res, next)=>{
 });
 
 
+//@desc      searching the listings funct...
+//@route     GET /api/listing/search
+//@access    public
+export const searchListings = asyncHandler(async (req, res, next)=>{
+    try {
+      const limit = parseInt(req.query.limit) || 9; //making it to start from 0-9 listings
+      const startIndex = parseInt(req.query.startindex) || 0; //making it to start from 0
+
+      //making a query for the checkBox : if undefined or false it should query it
+
+      let offer = req.query.offer;
+
+      if (offer === undefined || offer === 'false') {
+         offer = { $in: [false, true]}
+      };
+
+      let furnished = req.query.furnished;
+
+      if (furnished === undefined || furnished === 'false') {
+        furnished = { $in: [false, true] };
+      };
+
+      let parking = req.query.parking;
+
+      if (parking === undefined || parking === 'false') {
+        parking = { $in: [false, true] };
+      };
+
+
+      let type = req.query.type;
+
+      if (type === undefined || type === 'all') {
+        type = { $in: ['sale', 'rent'] };
+      };
+
+      const searchTerm = req.query.searchTerm || ''; 
+      const sort = req.query.sort || 'createdAt';
+      const order = req.query.order || 'desc';
+
+      const listings = await Listing.find({
+         title: { $regex: searchTerm, $options: 'i' },
+         offer,
+         furnished,
+         parking,
+         type,
+       })
+         .sort({ [sort]: order })
+         .limit(limit)
+         .skip(startIndex);
+   
+       if (!listings) return next(errorHandler(401, 'No listings found'));
+       // Handle the case where no listings were found, e.g., send a 404 response.      
+   
+       // Send the listings as a JSON response
+       return res.status(200).json(listings);
+  
+
+    } catch (error) {
+      next(error);
+    };
+});
+
+
+
+
+
+
+
+
+
