@@ -18,7 +18,8 @@ import Notiflix from "notiflix";
 
 const Profile = () => {
 
-const {currentUser, loading, error} = useSelector(state => state.user); //getting the authenticated user
+const {currentUser, loading, error} = useSelector(state => state.user); 
+//getting the authenticated user
 
   
   const fileRef = useRef(null); //for the image
@@ -37,7 +38,7 @@ const {currentUser, loading, error} = useSelector(state => state.user); //gettin
 
   //handles the input change
   const handleChange =(e)=>{
-    setFormData({...formData, [e.target.id] : e.target.value })
+    setFormData({ ...formData, [e.target.id] : e.target.value })
   };
 
 
@@ -289,7 +290,8 @@ const {currentUser, loading, error} = useSelector(state => state.user); //gettin
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         
         <input
-        onChange={(e) => handleFileChange(e)}
+        // onChange={(e) => handleFileChange(e)}
+        onChange={(e) => setFile(e.target.files[0])}
         type='file'
         ref={fileRef}
         hidden

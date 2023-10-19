@@ -17,8 +17,8 @@ const initialState = {
     description: '',
     address: '',
     type: 'rent',
-    bedrooms: 1,
-    bathrooms: 1,
+    bedrooms: 2,
+    bathrooms: 2,
     regularPrice: 5000,
     discountPrice: 3000,
     offer: false,
@@ -309,7 +309,7 @@ const CreateListing = () => {
             />
             <div className='flex flex-col items-center'>
             <p>Regular price</p>
-            <span className='text-xs'>(#/month)</span>
+            <span className='text-xs'>(&#x20A6;/year)</span>
             </div>
           </div>
           {offer && (
@@ -327,7 +327,7 @@ const CreateListing = () => {
             <div className='flex flex-col items-center'>
             <p>Discount price</p>
             {type === 'rent' && (
-            <span className='text-xs'>(#/month)</span>
+            <span className='text-xs'>(#/year)</span>
             )}
             </div>
           </div>
