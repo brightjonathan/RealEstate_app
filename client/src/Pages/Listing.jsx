@@ -119,7 +119,7 @@ const Listing = () => {
               {listing.description}
             </p>
             <ul className='text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6'>
-              <li className='flex items-center gap-1 whitespace-nowrap '>
+              {/* <li className='flex items-center gap-1 whitespace-nowrap '>
                 <BsShareFill className='text-lg' />
                 {listing.bedrooms > 1
                   ? `${listing.bedrooms} beds `
@@ -130,7 +130,7 @@ const Listing = () => {
                 {listing.bathrooms > 1
                   ? `${listing.bathrooms} baths `
                   : `${listing.bathrooms} bath `}
-              </li>
+              </li> */}
               <li className='flex items-center gap-1 whitespace-nowrap '>
                 <BsShareFill className='text-lg' />
                 {listing.parking ? 'Parking spot' : 'No Parking'}
