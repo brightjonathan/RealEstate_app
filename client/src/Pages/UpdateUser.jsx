@@ -320,7 +320,7 @@ const UpdateUser = () => {
             />
             <div className='flex flex-col items-center'>
             <p>Regular price</p>
-            <span className='text-xs'>(#/month)</span>
+            <span className='text-xs'>(&#x20A6;/year)</span>
             </div>
           </div>
           {offer && (
@@ -338,7 +338,7 @@ const UpdateUser = () => {
             <div className='flex flex-col items-center'>
             <p>Discount price</p>
             {type === 'rent' && (
-            <span className='text-xs'>(#/month)</span>
+            <span className='text-xs'>(&#x20A6;/year)</span>
             )}
             </div>
           </div>
